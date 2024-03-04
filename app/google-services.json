@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1087863098139",
+    "project_id": "app-manuales-1",
+    "storage_bucket": "app-manuales-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1087863098139:android:f1dfdbce6f6ea9d24fa1be",
+        "android_client_info": {
+          "package_name": "com.njso.manualsapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_3zVFU72zfrbew3GQKG_XpnioA2J8UW0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

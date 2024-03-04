@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">ManualsApp</string>
+
+    <string name="Menu_panel">Panel</string>
+    <string name="Menu_cuenta">Cuenta</string>
+
+    <string name="Titulo_RL_Admin">Título</string>
+
+    <string name="Txt_rol">Por favor elija un rol</string>
+    <string name="Btn_rol_administrador">Administrador</string>
+    <string name="Btn_rol_cliente">Cliente</string>
+
+    <string name="TxtRegistroAdmin">Registro de Administrador</string>
+
+    <string name="Et_nombres_admin">Nombres</string>
+    <string name="Et_email_admin">email</string>
+    <string name="Et_password_admin">Contraseña</string>
+    <string name="Et_R_password_admin">Repita la contraseña</string>
+    <string name="Btn_registrar_admin">Registarme</string>
+    <string name="CerrarSesionAdmin">Cerrar Sesión</string>
+    <string name="TxtLoginAdmin">Login Administradores</string>
+    <string name="Btn_login_admin">Ingresar</string>
+    <string name="Txt_tengo_cuenta">Tengo una cuenta</string>
+
+    <string name="Btn_agregar_categoria">Agregar Categoría</string>
+    <string name="Txt_agregar_categoria">Agregar Categoría</string>
+    <string name="Et_categoria">Ingrese Categoría</string>
+    <string name="Agregar_categoria_BD">Agregar</string>
+    
+    <string name="Item_nombre_cat_a">Nombre Categoría</string>
+    <string name="Buscar_categoria">Buscar Categoría</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
