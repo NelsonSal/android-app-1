@@ -26,9 +26,18 @@
     <string name="Txt_agregar_categoria">Agregar Categoría</string>
     <string name="Et_categoria">Ingrese Categoría</string>
     <string name="Agregar_categoria_BD">Agregar</string>
-    
+
     <string name="Item_nombre_cat_a">Nombre Categoría</string>
     <string name="Buscar_categoria">Buscar Categoría</string>
+    <string name="Txt_agregar_libro">Agregar Libro</string>
+
+    <string name="Et_titulo_libro">Título Libro</string>
+    <string name="Et_descripcion_libro">Descripción Libro</string>
+    <string name="Tv_categoria_libro">Categoría</string>
+
+    <string name="Btn_subir_libro">Subir</string>
+
+    <string name="xxx">xx</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
