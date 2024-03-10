@@ -10,6 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/icono_manuals_round"
         android:supportsRtl="true"
+        android:name=".Administrador.MisFunciones"
         android:theme="@style/Theme.ManualsApp"
         tools:targetApi="31">
         <activity
