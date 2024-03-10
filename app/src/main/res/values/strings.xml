@@ -41,7 +41,15 @@
     <string name="Txt_categoria_libro">Categoría</string>
 
     <string name="Et_buscar_libro_admin">Buscar Libro</string>
+
+    <string name="Txt_titulo_libro_item">Título Libro</string>
+    <string name="Txt_descripcion_libro_item">Descripción Libro</string>
+    <string name="Txt_categoria_libro_admin">Categoría</string>
+    <string name="Txt_tamanio_libro_admin">5MB</string>
+    <string name="Txt_fecha_libro_admin">dd/MM/yyyy</string>
     <string name="xxx">xx</string>
+
+
 
 
     <!-- TODO: Remove or change this placeholder text -->
