@@ -1,6 +1,7 @@
 package com.njso.manualsapp.Administrador
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.TextureView
 import android.view.View
@@ -63,6 +64,13 @@ class AdaptadorCategoria : RecyclerView.Adapter<AdaptadorCategoria.HolderCategor
 
                 }
             builder.show()
+        }
+
+        holder.itemView.setOnClickListener{
+            val intent= Intent(m_context,ListaPdfAdmin::class.java)
+            intent.putExtra("idCategoria", id)
+            intent.putExtra("tituloCategoria", categoria)
+            m_context.startActivity(intent)
         }
     }
 

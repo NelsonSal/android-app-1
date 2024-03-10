@@ -48,6 +48,7 @@ dependencies {
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-storage")
+    implementation ("com.github.barteksc:android-pdf-viewer:2.8.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
