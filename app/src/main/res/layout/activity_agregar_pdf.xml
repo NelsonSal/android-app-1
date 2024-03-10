@@ -101,7 +101,7 @@
         <!--categoria seleccionada-->
         <TextView
             android:id="@+id/Tv_categoria_libro"
-            android:text="@string/Tv_categoria_libro"
+            android:hint="@string/Tv_categoria_libro"
             app:drawableStartCompat="@drawable/ic_categoria"
             app:drawableEndCompat="@drawable/ic_abajo"
             android:drawablePadding="10dp"
