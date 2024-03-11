@@ -43,13 +43,23 @@ class AdaptadorPdfAdmin : RecyclerView.Adapter<AdaptadorPdfAdmin.HolderPdfAdmin>
     }
 
     override fun onBindViewHolder(holder: HolderPdfAdmin, position: Int) {
-        val modelo  = pdfArrayList[position]
+        val modelo = pdfArrayList[position]
         val pdfId = modelo.id
         val categoriaId = modelo.categoria
-        val tirulo = modelo.titulo
+        val titulo = modelo.titulo
         val descripcion = modelo.descripcion
         val pdfUrl = modelo.url
         val tiempo = modelo.tiempo
-        return
+
+        val formatoTiempo = MisFunciones.formatoTiempo(tiempo)
+
+        holder.Txt_titulo_libro_item.text = titulo
+        holder.Txt_descripcion_libro_item.text = descripcion
+        holder.Txt_fecha_libro_admin.text = formatoTiempo
+
+        MisFunciones.CargarCategoria(categoriaId, holder.Txt_categoria_libro_admin)
+        MisFunciones.CargarPdfUrl(pdfUrl,titulo, holder.VisualizadorPDF,holder.progressBar, null)
+        MisFunciones.CargarTamanioPdf(pdfUrl,titulo,holder.Txt_tamanio_libro_admin)
+
     }
 }

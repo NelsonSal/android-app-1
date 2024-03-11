@@ -20,7 +20,7 @@ class MisFunciones : Application() {
         super.onCreate()
     }
     companion object{
-        fun formatoTiempo (tiempo : Long) : String{
+        fun formatoTiempo (tiempo : Long) : String{ //Typo
             val cal = Calendar.getInstance(Locale.ENGLISH)
             cal.timeInMillis = tiempo
             //dd/MM/yyyy
@@ -48,8 +48,8 @@ class MisFunciones : Application() {
 
                 }
         }
-        fun CargarPdfUrl(pdfUrl: String, pdfTitulo: String,pdfView: PDFView, progressBar: ProgressBar,
-                         paginaTv: TextView){
+        fun CargarPdfUrl(pdfUrl: String, pdfTitulo: String, pdfView: PDFView, progressBar: ProgressBar,
+                         paginaTv: TextView?){
             val ref = FirebaseStorage.getInstance().getReferenceFromUrl(pdfUrl)
             ref.getBytes(Constantes.Maximo_bytes_pdf)
                 .addOnSuccessListener {bytes->
@@ -58,7 +58,7 @@ class MisFunciones : Application() {
                         .spacing(0)
                         .swipeHorizontal(false)
                         .enableSwipe(false)
-                        .onError { t->
+                        .onError {t->
                             progressBar.visibility= View.INVISIBLE
                         }
                         .onPageError {page, pageCount->
@@ -89,7 +89,7 @@ class MisFunciones : Application() {
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
+
                     }
                 })
         }

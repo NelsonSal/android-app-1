@@ -22,10 +22,10 @@
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/Txt_titulo_libro"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:text="@string/Txt_titulo_libro"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
