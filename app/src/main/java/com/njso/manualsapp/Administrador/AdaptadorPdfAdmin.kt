@@ -4,18 +4,23 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.njso.manualsapp.databinding.ItemLibroAdminBinding
 
-class AdaptadorPdfAdmin : RecyclerView.Adapter<AdaptadorPdfAdmin.HolderPdfAdmin>{
+class AdaptadorPdfAdmin : RecyclerView.Adapter<AdaptadorPdfAdmin.HolderPdfAdmin>, Filterable{
 
     private lateinit var binding : ItemLibroAdminBinding
     private var m_context : Context
-    private var pdfArrayList : ArrayList<Modelopdf>
+    public var pdfArrayList : ArrayList<Modelopdf>
+    private var filtroLibro : ArrayList<Modelopdf>
+    private  var filtro : FiltroPdfAdmin? = null
 
     constructor(m_context: Context, pdfArrayList: ArrayList<Modelopdf>) : super() {
         this.m_context = m_context
         this.pdfArrayList = pdfArrayList
+        this.filtroLibro = pdfArrayList
     }
 
 
@@ -61,5 +66,12 @@ class AdaptadorPdfAdmin : RecyclerView.Adapter<AdaptadorPdfAdmin.HolderPdfAdmin>
         MisFunciones.CargarPdfUrl(pdfUrl,titulo, holder.VisualizadorPDF,holder.progressBar, null)
         MisFunciones.CargarTamanioPdf(pdfUrl,titulo,holder.Txt_tamanio_libro_admin)
 
+    }
+
+    override fun getFilter(): Filter {
+        if (filtro == null){
+            filtro = FiltroPdfAdmin(filtroLibro, this)
+        }
+        return filtro as FiltroPdfAdmin
     }
 }

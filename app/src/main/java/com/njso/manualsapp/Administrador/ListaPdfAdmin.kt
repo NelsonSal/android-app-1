@@ -2,6 +2,8 @@ package com.njso.manualsapp.Administrador
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -29,8 +31,31 @@ class ListaPdfAdmin : AppCompatActivity() {
         tituloCategoria=intent.getStringExtra("tituloCategoria")!!
 
         binding.TxtCategoriaLibro.text = tituloCategoria
+        binding.IbRegresar.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+
+        }
 
         ListarLibros()
+
+        binding.EtBuscarLibroAdmin.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(libro: CharSequence?, start: Int, before: Int, count: Int) {
+                try {
+                    adaptadorPdfAdmin.filter.filter(libro)
+
+                }catch (e:Exception){
+
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
 
 
     }
