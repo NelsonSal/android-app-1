@@ -47,6 +47,9 @@
     <string name="Txt_categoria_libro_admin">Categoría</string>
     <string name="Txt_tamanio_libro_admin">5MB</string>
     <string name="Txt_fecha_libro_admin">dd/MM/yyyy</string>
+
+    <string name="Txt_actualizar_Libro">Actualizar Libro</string>
+    <string name="Btn_actualizar_Libro">Actualizar</string>
     <string name="xxx">xx</string>
 
 
