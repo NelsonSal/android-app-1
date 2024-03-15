@@ -1,10 +1,13 @@
 package com.njso.manualsapp.Administrador
 
 import android.app.Application
+import android.app.ProgressDialog
+import android.content.Context
 import android.text.format.DateFormat
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import com.github.barteksc.pdfviewer.PDFView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -92,6 +95,37 @@ class MisFunciones : Application() {
 
                     }
                 })
+        }
+        fun EliminarLibro(context : Context , idLibro: String, urlLibro : String, tituloLibro: String){
+            val progressDialog = ProgressDialog(context)
+            progressDialog.setTitle("Espere por favor")
+            progressDialog.setMessage("Eliminando $tituloLibro")
+            progressDialog.setCanceledOnTouchOutside(false)
+            progressDialog.show()
+
+            val storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(urlLibro)
+            storageReference.delete()
+                .addOnSuccessListener {
+                    val ref = FirebaseDatabase.getInstance().getReference("Libros")
+                    ref.child(idLibro)
+                        .removeValue()
+                        .addOnSuccessListener {
+                            progressDialog.dismiss()
+                            Toast.makeText(context, "El libro se ha eliminado correctamente", Toast.LENGTH_SHORT).show()
+
+                        }
+                        .addOnFailureListener {e->
+                            progressDialog.dismiss()
+                            Toast.makeText(context, "Fallo en la eliminación debido a ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
+
+                }
+                .addOnFailureListener { e->
+                    progressDialog.dismiss()
+                    Toast.makeText(context, "Fallo en la eliminación debido a ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+
+
         }
     }
 }
