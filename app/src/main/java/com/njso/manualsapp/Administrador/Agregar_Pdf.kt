@@ -2,6 +2,7 @@ package com.njso.manualsapp.Administrador
 
 import android.app.ProgressDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +12,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -44,7 +46,15 @@ class Agregar_Pdf : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
         binding.AdjuntarPdfIb.setOnClickListener {
-            ElegirPdf()
+            if (ContextCompat.checkSelfPermission(this@Agregar_Pdf,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED){
+                ElegirPdf()
+            }else{
+                SolicitudPermisoAccederArchivos.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+
+
+
         }
         binding.TvCategoriaLibro.setOnClickListener{
             SeleccionarCat()
@@ -179,6 +189,7 @@ class Agregar_Pdf : AppCompatActivity() {
         pdfActivityRL.launch(intent)
 
     }
+    //Permite obtener el archivo pdf deseado
     val pdfActivityRL= registerForActivityResult(
         ActivityResultContracts.StartActivityForResult(),
         ActivityResultCallback<ActivityResult>{resultado->
@@ -189,4 +200,17 @@ class Agregar_Pdf : AppCompatActivity() {
             }
         }
     )
+
+    private val SolicitudPermisoAccederArchivos=
+        registerForActivityResult(ActivityResultContracts.RequestPermission()){Permiso->
+            if (Permiso){
+                //Si el permiso fue concedido
+                ElegirPdf()
+            }else{
+                //Si el permiso no fue concedido
+                Toast.makeText(this,"El permiso para acceder a los archivo no ha sido concedido",Toast.LENGTH_SHORT).show()
+
+            }
+
+        }
 }
