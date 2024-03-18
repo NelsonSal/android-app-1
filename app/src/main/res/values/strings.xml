@@ -68,6 +68,9 @@
     <string name="Txt_descripcion_D">Descripción: </string>
     <string name="descripcion_D">--</string>
 
+    <string name="Btn_leer_libro">Leer</string>
+    <string name="Txt_leer_libro">Lectura de Libro</string>
+
     <string name="xxx">xx</string>
 
 

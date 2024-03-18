@@ -1,5 +1,6 @@
 package com.njso.manualsapp.Administrador
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.njso.manualsapp.LeerLibro
 import com.njso.manualsapp.R
 import com.njso.manualsapp.databinding.ActivityDetalleLibroBinding
 
@@ -23,6 +25,11 @@ class DetalleLibro : AppCompatActivity() {
         binding.IbRegresar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
 
+        }
+        binding.BtnLeerLibro.setOnClickListener{
+            val intent = Intent(this@DetalleLibro,LeerLibro::class.java)
+            intent.putExtra("idLibro", idLibro)
+            startActivity(intent)
         }
 
         cargarDetalleLibro()
