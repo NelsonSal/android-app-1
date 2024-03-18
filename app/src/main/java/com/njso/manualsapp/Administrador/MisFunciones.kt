@@ -70,7 +70,7 @@ class MisFunciones : Application() {
                         .onLoad { Pagina->
                             progressBar.visibility= View.INVISIBLE
                             if(paginaTv != null){
-                                paginaTv.text = "$paginaTv"
+                                paginaTv.text = "$Pagina"
                             }
 
                         }
