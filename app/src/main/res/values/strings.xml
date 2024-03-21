@@ -71,6 +71,17 @@
     <string name="Btn_leer_libro">Leer</string>
     <string name="Txt_leer_libro">Lectura de Libro</string>
 
+    <!--Perfil Administrador-->
+    <string name="nombres_admin">Nombres: </string>
+    <string name="Txt_nombres_admin"> -- </string>
+    <string name="email_admin">Email: </string>
+    <string name="Txt_email_admin"> -- </string>
+    <string name="tiempo_registro_admin">Miembro desde: </string>
+    <string name="Txt_tiempo_registro_admin"> -- </string>
+    <string name="rol_admin">Rol: </string>
+    <string name="Txt_rol_admin"> -- </string>
+    <string name="Txt_mas_opciones">Más Opciones: </string>
+
     <string name="xxx">xx</string>
 
 
