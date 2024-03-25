@@ -15,6 +15,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.njso.manualsapp.Administrador.EditarPerfilAdmin
 import com.njso.manualsapp.Administrador.MisFunciones
 import com.njso.manualsapp.Elegir_rol
 import com.njso.manualsapp.R
@@ -47,7 +48,12 @@ class Fragment_admin_cuenta : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         firebaseAuth = FirebaseAuth.getInstance()
+
         cargarInformacion()
+        binding.EditarPerfilAdmin.setOnClickListener {
+            startActivity(Intent(mContext,EditarPerfilAdmin::class.java))
+
+        }
         binding.CerrarSesionAdmin.setOnClickListener{
             firebaseAuth.signOut()
             startActivity(Intent(context, Elegir_rol::class.java))
