@@ -1,5 +1,6 @@
 package com.njso.manualsapp.Administrador
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,8 @@ class EditarPerfilAdmin : AppCompatActivity() {
 
     private lateinit var firebaseAuth: FirebaseAuth
 
+    private lateinit var progressDialog : ProgressDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditarPerfilAdminBinding.inflate(layoutInflater)
@@ -26,6 +29,43 @@ class EditarPerfilAdmin : AppCompatActivity() {
         firebaseAuth=FirebaseAuth.getInstance()
 
         cargarInformacion()
+
+        progressDialog= ProgressDialog(this)
+        progressDialog.setTitle("Espere por favor")
+        progressDialog.setCanceledOnTouchOutside(false)
+
+        binding.BtnActualizarInfo.setOnClickListener {
+            validarinformacion()
+        }
+    }
+
+    private var nombres=""
+    private fun validarinformacion() {
+        nombres=binding.EtANombres.text.toString().trim()
+        if (nombres.isEmpty()){
+            Toast.makeText(applicationContext, "Ingrese un nuevo nombre",Toast.LENGTH_SHORT).show()
+        }else {
+            actualizarinformacion()
+        }
+
+    }
+
+    private fun actualizarinformacion() {
+        progressDialog.setMessage("Actualizando información")
+        val hashMap : HashMap<String,Any> = HashMap()
+        hashMap["nombres"]="$nombres"
+        val ref = FirebaseDatabase.getInstance().getReference("Usuarios")
+        ref.child(firebaseAuth.uid!!)
+            .updateChildren(hashMap)
+            .addOnSuccessListener {
+                progressDialog.dismiss()
+                Toast.makeText(applicationContext, "Se actualizó su información",Toast.LENGTH_SHORT).show()
+
+            }
+            .addOnFailureListener {e->
+                progressDialog.dismiss()
+                Toast.makeText(applicationContext, "No se pudo actualizar debido a ${e.message}",Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun cargarInformacion() {
@@ -41,7 +81,7 @@ class EditarPerfilAdmin : AppCompatActivity() {
                     binding.EtANombres.setText(nombre)
 
                     try {
-                        Glide.with(this@EditarPerfilAdmin)
+                        Glide.with(applicationContext)
                             .load(imagen)
                             .placeholder(R.drawable.ic_imagen_perfil)
                             .into(binding.imgPerfilAdmin)
