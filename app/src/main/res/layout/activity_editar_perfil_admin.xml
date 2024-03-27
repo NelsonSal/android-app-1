@@ -77,7 +77,7 @@
                 <EditText
                     android:id="@+id/Et_a_nombres"
                     android:hint="@string/Et_a_nombres"
-                    android:inputType="textPersonName"
+                    android:inputType="textPersonName|textCapWords"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 

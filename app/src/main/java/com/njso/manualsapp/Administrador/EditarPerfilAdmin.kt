@@ -2,9 +2,12 @@ package com.njso.manualsapp.Administrador
 
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.Menu
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -12,6 +15,7 @@ import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -46,6 +50,10 @@ class EditarPerfilAdmin : AppCompatActivity() {
         progressDialog.setTitle("Espere por favor")
         progressDialog.setCanceledOnTouchOutside(false)
 
+        binding.IbRegresar.setOnClickListener{
+            onBackPressedDispatcher.onBackPressed()
+        }
+
         binding.FbCambiarImagen.setOnClickListener {
             mostrarOpciones()
         }
@@ -58,22 +66,102 @@ class EditarPerfilAdmin : AppCompatActivity() {
     private fun mostrarOpciones() {
         val popupMenu = PopupMenu(this, binding.imgPerfilAdmin)
         popupMenu.menu.add(Menu.NONE,0,0,"Galería")
-        popupMenu.menu.add(Menu.NONE,0,0,"Cámara")
+        popupMenu.menu.add(Menu.NONE,1,1,"Cámara")
         popupMenu.show()
 
-        popupMenu.setOnMenuItemClickListener { item->
+        popupMenu.setOnMenuItemClickListener { item ->
             val id = item.itemId
-            if (id==0){
+            if (id == 0) {
                 //Elegir una imagen de la galería
-                seleccionarImgGaleria()
+                if (ContextCompat.checkSelfPermission(
+                        applicationContext,
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+                    == PackageManager.PERMISSION_GRANTED
+                ) {
+                    seleccionarImgGaleria()
+                } else {
+                    permisoGaleria.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                }
 
-            }else if (id==1){
-                //Tomar fotografía
 
+            } else if (id == 1) {
+                //Tomar fotografía //en curso falto dar permiso a external Storage el cual se pide en el programa
+                // you need to request permission at runtime
+                // !!!Revisar no concede permisos de Camara automatico
+                if (ContextCompat.checkSelfPermission(
+                        applicationContext,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                    tomarFotografia()
+
+                    //permisoOtro.launch(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                }
+                else{
+                    permisoOtro.launch(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    permisoCamara.launch(android.Manifest.permission.CAMERA)
+                }
+                } else if (ContextCompat.checkSelfPermission(applicationContext, android.Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_GRANTED) {
+                permisoCamara.launch(android.Manifest.permission.CAMERA)
+                } else {
+                tomarFotografia()
             }
-            true
+
+                true
         }
     }
+
+    private fun tomarFotografia() {
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.TITLE,"Titulo_temp")
+        values.put(MediaStore.Images.Media.DESCRIPTION, "Descripcion_temp")
+        imagenUri=contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values)
+
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,imagenUri)
+
+        ARLCamara.launch(intent)
+
+
+    }
+
+    private val ARLCamara = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        ActivityResultCallback<ActivityResult>{resultado->
+            if (resultado.resultCode==Activity.RESULT_OK){
+                subirImagenStorage()
+            }else{
+                Toast.makeText(applicationContext,"Cancelado", Toast.LENGTH_SHORT).show()
+
+            }
+
+        }
+
+    )
+
+    private val permisoCamara=
+        registerForActivityResult(ActivityResultContracts.RequestPermission()){Permiso_concedido->
+            if (Permiso_concedido){
+                tomarFotografia()
+
+            }else{
+                Toast.makeText(applicationContext,"No permiso Camara", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
+    private val permisoOtro=
+        registerForActivityResult(ActivityResultContracts.RequestPermission()){Permiso_concedido->
+            if (Permiso_concedido){
+                tomarFotografia()
+
+            }else{
+                Toast.makeText(applicationContext,"No permiso Otro", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
+
 
     private fun seleccionarImgGaleria() {
         val intent = Intent(Intent.ACTION_PICK)
@@ -88,7 +176,8 @@ class EditarPerfilAdmin : AppCompatActivity() {
                 val data = resultado.data
                 imagenUri=data!!.data
 
-                binding.imgPerfilAdmin.setImageURI(imagenUri)
+                //binding.imgPerfilAdmin.setImageURI(imagenUri)
+                subirImagenStorage()
             }else {
                 Toast.makeText(applicationContext,"Cancelado", Toast.LENGTH_SHORT).show()
             }
@@ -96,19 +185,28 @@ class EditarPerfilAdmin : AppCompatActivity() {
         }
     )
 
+    private val permisoGaleria=
+        registerForActivityResult(ActivityResultContracts.RequestPermission()){Permiso_concedido->
+            if (Permiso_concedido){
+                seleccionarImgGaleria()
+
+            }else{
+                Toast.makeText(applicationContext,"No permiso de acceso a la Galería", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
+
+
+
+
     private var nombres=""
     private fun validarinformacion() {
         nombres=binding.EtANombres.text.toString().trim()
         if (nombres.isEmpty()){
             Toast.makeText(applicationContext, "Ingrese un nuevo nombre",Toast.LENGTH_SHORT).show()
         }else {
-            if (imagenUri==null){
-                actualizarinformacion()
-            }else{
-                subirImagenStorage()
-            }
-
-
+            actualizarinformacion()
 
         }
 
